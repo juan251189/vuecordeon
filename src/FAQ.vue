@@ -8,6 +8,6 @@
 <script>
   export default{
     name:'FAQ',
-    props:['faq','i']
+    props:['faq','index']
   }
 </script>
