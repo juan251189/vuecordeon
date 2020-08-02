@@ -4,7 +4,11 @@
     <h1>Vue<span>CORDION</span></h1>
   </header>
   <div class="faqs">
-    <FAQ v-for="(faq,i) in faqs" :faq="faq" :index="i" :key="i">
+    <FAQ v-for="(faq,i) in faqs"
+    :faq="faq"
+    :index="i"
+    :key="i"
+    @click="()=>toggleOpen(i)">
     </FAQ>
   </div>
 
@@ -19,6 +23,7 @@ export default {
   components: {
     FAQ
   },
+
   data() {
     return {
       faqs: [{
@@ -39,6 +44,15 @@ export default {
         }
       ]
     }
+  },
+
+  methods: {
+
+      toggleOpen:function(index){
+        this.faqs=this.faqs.map((faq,i));
+      }
+
+
   }
 }
 </script>
@@ -111,4 +125,17 @@ header h1 span {
   background-repeat: no-repeat;
 
 }
+.faq .answer{
+  color: #3c3c3c;
+  font-size:18px;
+  opacity: 0px;
+  max-height: 0px;
+  overflow-y: hidden;
+  transition: all 0.4s ease-out;
+
+
+}
+
+
+
 </style>
