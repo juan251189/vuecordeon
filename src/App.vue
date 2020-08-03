@@ -1,20 +1,13 @@
 <template>
 <div id="app">
   <header>
-    <h1>Vue<span>CORDION</span></h1>
+    <h1>VUE<span>CORDION</span></h1>
   </header>
   <div class="faqs">
-    <FAQ v-for="(faq,i) in faqs"
-    :faq="faq"
-    :index="i"
-    :key="i"
-    @click="()=>toggleOpen(i)">
-    </FAQ>
+    <FAQ v-for="(faq, i) in faqs" :faq="faq" :index="i" :key="i" :open="faq.open" @toggleOpen="toggleOpen" />
   </div>
-
 </div>
 </template>
-
 <script>
 import FAQ from './FAQ';
 
@@ -30,7 +23,6 @@ export default {
           question: 'where are you from?',
           answer: 'Colombia',
           open: false
-
         },
         {
           question: 'how long have you been here?',
@@ -48,15 +40,19 @@ export default {
 
   methods: {
 
-      toggleOpen:function(index){
-        this.faqs=this.faqs.map((faq,i));
-      }
-
-
+    toggleOpen: function(index) {
+      this.faqs = this.faqs.map((faq, i) => {
+        if (index === i) {
+          faq.open = !faq.open;
+        } else {
+          faq.open = false;
+        }
+        return faq;
+      });
+    }
   }
 }
 </script>
-
 <style>
 * {
   margin: 0;
@@ -85,57 +81,62 @@ header h1 {
 }
 
 header h1 span {
-  color: #56e3b8;
+  color: #56E3B8;
   font-weight: 900;
 }
 
-.faq{
-  display:block;
+.faq {
+  display: block;
   width: 100%;
   max-width: 768px;
   margin: 15px auto;
-  padding:15px;
+  padding: 15px;
   border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
-  background-color: #fff;
-
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  background-color: #FFF;
 }
 
-.faq .question{
-
-  position:relative;
-  color:#3c3c3c;
+.faq .question {
+  position: relative;
+  color: #3c3c3c;
   font-size: 20px;
   transition: all 0.4s linear;
 }
 
-.faq .question::after{
+.faq .question::after {
   content: '';
-
   position: absolute;
-  top:50%;
+  top: 50%;
   right: 0px;
   transform: translateY(-50%) rotate(0deg);
-
   width: 30px;
   height: 30px;
   background-image: url('./arrow-down-mint.svg');
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-
+  transition: all 0.2s linear;
 }
-.faq .answer{
+
+.faq.open .question {
+  margin-bottom: 15px;
+}
+
+.faq.open .question::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.faq .answer {
   color: #3c3c3c;
-  font-size:18px;
-  opacity: 0px;
+  font-size: 18px;
+  opacity: 0;
   max-height: 0px;
   overflow-y: hidden;
   transition: all 0.4s ease-out;
-
-
 }
 
-
-
+.faq.open .answer {
+  opacity: 1;
+  max-height: 1000px;
+}
 </style>
